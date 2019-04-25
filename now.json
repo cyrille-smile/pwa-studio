@@ -1,32 +1,54 @@
 {
+    "version": 2,
     "name": "venia",
     "alias": [
         "magento-venia-develop"
     ],
     "scope": "magento-research",
     "env": {
-        "UPWARD_JS_BIND_LOCAL": "false"
+        "UPWARD_JS_BIND_LOCAL": "false",
+        "NOW_DEBUG": "1",
+        "MAGENTO_BACKEND_URL": "https://release-dev-231-npzdaky-zddsyhrdimyra.us-4.magentosite.cloud/",
+        "DEBUG": "upward-js:*"
     },
     "builds": [
         {
+            "src": "packages/venia-concept/package.json",
+            "use": "@now/static-build"
+        },
+        {
             "config": {
+                "includeFiles": [
+                    ".env.dist",
+                    "venia-upward.yml",
+                    "static/*",
+                    "templates/*"
+                ],
                 "maxLambdaSize": "50mb"
             },
             "src": "packages/venia-concept/server-lambda.js",
             "use": "@now/node"
-        },
-        {
-            "src": "packages/venia-concept/{.env.dist,server-lambda.js,venia-upward.yml,validate-environment.js}",
-            "use": "@now/static"
-        },
-        {
-            "src": "packages/venia-concept/{static,templates}/*",
-            "use": "@now/static"
         }
     ],
     "routes": [
         {
-            "src": "/*",
+            "src": "^/([0-9A-Fa-e]\\.svg)",
+            "dest": "packages/venia-concept/$1"
+        },
+        {
+            "src": "^/(precache-manifest.*\\.js)",
+            "dest": "packages/venia-concept/$1"
+        },
+        {
+            "src": "^/(sw\\.js)",
+            "dest": "packages/venia-concept/$1"
+        },
+        {
+            "src": "^/(js/.*\\.js)",
+            "dest": "packages/venia-concept/$1"
+        },
+        {
+            "src": "/(.*)",
             "dest": "packages/venia-concept/server-lambda.js"
         }
     ],

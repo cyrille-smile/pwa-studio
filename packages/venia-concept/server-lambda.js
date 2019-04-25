@@ -1,3 +1,4 @@
+process.chdir(__dirname);
 const validEnv = require('./validate-environment')(process.env);
 const addImgOptMiddleware = require('@magento/pwa-buildpack/dist/Utilities/addImgOptMiddleware');
 const {
@@ -27,17 +28,17 @@ const appStarted = serve();
 // This part is for now.sh version 2 and other serverless deployments.
 // A lambda probably won't execute against more than one request, but juuuuust
 // in case it does, let's cache the server startup procedure.
-let app;
+let server;
 let calls = 0;
 
 module.exports = async (req, res) => {
-    if (!app) {
+    if (!server) {
         console.log('[VENIA] Awaiting staging server...');
-        app = await appStarted;
+        server = await appStarted;
     } else {
         console.log(
             `[VENIA] Reusing existing staging server (this lambda handled ${++calls} calls)`
         );
     }
-    app(req, res);
+    server.app(req, res);
 };
