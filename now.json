@@ -8,8 +8,8 @@
     "env": {
         "UPWARD_JS_BIND_LOCAL": "false",
         "NOW_DEBUG": "1",
-        "MAGENTO_BACKEND_URL": "https://release-dev-231-npzdaky-zddsyhrdimyra.us-4.magentosite.cloud/",
-        "DEBUG": "upward-js:*"
+        "MAGENTO_BACKEND_URL_DISABLED": "https://release-dev-231-npzdaky-zddsyhrdimyra.us-4.magentosite.cloud/",
+        "DEBUG": "express-sharp"
     },
     "builds": [
         {
@@ -19,7 +19,7 @@
         {
             "config": {
                 "includeFiles": [
-                    ".env.dist",
+                    ".env",
                     "venia-upward.yml",
                     "static/*",
                     "templates/*"
