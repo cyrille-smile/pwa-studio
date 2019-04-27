@@ -8,12 +8,15 @@
     "env": {
         "UPWARD_JS_BIND_LOCAL": "false",
         "NOW_DEBUG": "1",
-        "MAGENTO_BACKEND_URL_DISABLED": "https://release-dev-231-npzdaky-zddsyhrdimyra.us-4.magentosite.cloud/",
-        "DEBUG": "express-sharp"
+        "DEBUG": "express-sharp",
+        "SHARP_IGNORE_GLOBAL_LIBVIPS": "1"
     },
     "builds": [
         {
-            "src": "packages/venia-concept/package.json",
+            "config": {
+                "distDir": "packages/venia-concept/dist"
+            },
+            "src": "now-build.sh",
             "use": "@now/static-build"
         },
         {

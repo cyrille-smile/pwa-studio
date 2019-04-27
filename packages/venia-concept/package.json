@@ -20,7 +20,6 @@
     "build:prod": "webpack -p --color --no-progress --profile --env.mode production",
     "clean": "rimraf dist esm",
     "download-schema": "graphql get-schema --project venia",
-    "now-build": "cp .env.dist .env && cd ../../ && yarn run build",
     "prepublishOnly": "yarn run build",
     "start": "node server.js",
     "start:debug": "node --inspect-brk ./node_modules/.bin/webpack-dev-server --progress --color --env.mode development",

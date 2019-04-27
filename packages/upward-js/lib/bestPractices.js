@@ -2,7 +2,7 @@ const connect = require('connect');
 let shrinkRay;
 
 try {
-    shrinkRay = require('shrink-ray-current');
+    shrinkRay = require('@magento/shrink-ray');
 } catch (error) {
     shrinkRay = false;
 }
@@ -15,7 +15,7 @@ function bestPractices() {
         bestPracticeMiddlewares.use(shrinkRay());
     } catch (e) {
         console.warn(
-            `Cannot add compression middleware: dependency \`shrink-ray-current\` is not
+            `Cannot add compression middleware: dependency \`@magento/shrink-ray\` is not
 installed or not compatible with this environment. Assets will be served uncompressed.
 
 If possible, install additional tools to build NodeJS native dependencies:
