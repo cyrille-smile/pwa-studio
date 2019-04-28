@@ -74,7 +74,8 @@
     "wait-for-expect": "~1.1.0"
   },
   "optionalDependencies": {
-    "bundlesize": "~0.17.1"
+    "bundlesize": "~0.17.1",
+    "sharp": "~0.22.1"
   },
   "engines": {
     "node": "8.10.0 || >=10.7.0",

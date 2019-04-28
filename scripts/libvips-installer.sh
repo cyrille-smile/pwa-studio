@@ -27,15 +27,15 @@ vips_version_minimum=8.7.4
 install_libvips_from_source() {
     vips_pkg_name=vips-$vips_version_minimum
     echo "Compiling libvips $vips_version_minimum from source"
-    curl -O https://github.com/libvips/libvips/releases/download/v$vips_version_minimum/$vips_pkg_name.tar.gz
+    # -L for obeying redirects from github release downloads
+    curl -OL https://github.com/libvips/libvips/releases/download/v$vips_version_minimum/$vips_pkg_name.tar.gz
     tar zvxf $vips_pkg_name.tar.gz
     cd $vips_pkg_name
     ./configure --enable-debug=no --enable-docs=no --enable-cxx=yes --without-python --without-orc --without-fftw $1
     make
     make install
     cd ..
-    rm -rf $vips_pkg_name
-    rm $vips_pkg_name.tar.gz
+    rm -rf $vips_pkg_name*
     ldconfig
     echo "Installed libvips $vips_version_minimum"
 }

@@ -8,7 +8,8 @@
     "env": {
         "UPWARD_JS_BIND_LOCAL": "false",
         "NOW_DEBUG": "1",
-        "DEBUG": "express-sharp"
+        "DEBUG": "express-sharp",
+        "SHARP_IGNORE_GLOBAL_LIBVIPS": "1"
     },
     "builds": [
         {

@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/magento-research/pwa-studio/tree/master/packages/upward-js#readme",
   "dependencies": {
-    "@magento/shrink-ray": "~3.0.3",
+    "@magento/shrink-ray": "~3.0.4",
     "apollo-link": "~1.2.8",
     "apollo-link-http": "~1.5.11",
     "connect": "~3.6.6",
