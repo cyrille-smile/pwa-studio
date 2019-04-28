@@ -4,7 +4,12 @@
 # Orinally made by Lovell Fuller for sharp
 # https://github.com/lovell/sharp
 #
-
+#
+#
+# Edited by James Zetlen, Adobe, Inc. for deployment on zeit.co/now v2
+# - Updated source location to github and simplified install from source command
+# - Added Amazon Linux AMI 2017 to case check
+#
 # Ensures libvips is installed and attempts to install it if not
 # Currently supports:
 # * Mac OS
@@ -17,23 +22,22 @@
 #   * Fedora 21, 22
 #   * Amazon Linux 2014.09
 
-vips_version_minimum=7.40.0
-vips_version_latest_major_minor=7.42
-vips_version_latest_patch=3
+vips_version_minimum=8.7.4
 
 install_libvips_from_source() {
-    echo "Compiling libvips $vips_version_latest_major_minor.$vips_version_latest_patch from source"
-    curl -O http://www.vips.ecs.soton.ac.uk/supported/$vips_version_latest_major_minor/vips-$vips_version_latest_major_minor.$vips_version_latest_patch.tar.gz
-    tar zvxf vips-$vips_version_latest_major_minor.$vips_version_latest_patch.tar.gz
-    cd vips-$vips_version_latest_major_minor.$vips_version_latest_patch
+    vips_pkg_name=vips-$vips_version_minimum
+    echo "Compiling libvips $vips_version_minimum from source"
+    curl -O https://github.com/libvips/libvips/releases/download/v$vips_version_minimum/$vips_pkg_name.tar.gz
+    tar zvxf $vips_pkg_name.tar.gz
+    cd $vips_pkg_name
     ./configure --enable-debug=no --enable-docs=no --enable-cxx=yes --without-python --without-orc --without-fftw $1
     make
     make install
     cd ..
-    rm -rf vips-$vips_version_latest_major_minor.$vips_version_latest_patch
-    rm vips-$vips_version_latest_major_minor.$vips_version_latest_patch.tar.gz
+    rm -rf $vips_pkg_name
+    rm $vips_pkg_name.tar.gz
     ldconfig
-    echo "Installed libvips $vips_version_latest_major_minor.$vips_version_latest_patch"
+    echo "Installed libvips $vips_version_minimum"
 }
 
 sorry() {
@@ -153,13 +157,16 @@ case $(uname -s) in
         # Probably Amazon Linux
         RELEASE=$(cat /etc/system-release)
         case $RELEASE in
-        "Amazon Linux AMI release 2014.09")
+        "Amazon Linux AMI release 2014.09"* | "Amazon Linux AMI release 2017."*)
             # Amazon Linux
             echo "Detected '$RELEASE'"
             echo "Installing libvips dependencies via yum"
             yum groupinstall -y "Development Tools"
             yum install -y gtk-doc libxml2-devel libjpeg-turbo-devel libpng-devel libtiff-devel libexif-devel libgsf-devel lcms-devel ImageMagick-devel gobject-introspection-devel libwebp-devel curl
             install_libvips_from_source "--prefix=/usr"
+            ;;
+        *)
+            sorry "$RELEASE"
             ;;
         esac
     else

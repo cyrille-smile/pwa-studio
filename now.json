@@ -8,24 +8,18 @@
     "env": {
         "UPWARD_JS_BIND_LOCAL": "false",
         "NOW_DEBUG": "1",
-        "DEBUG": "express-sharp",
-        "SHARP_IGNORE_GLOBAL_LIBVIPS": "1"
+        "DEBUG": "express-sharp"
     },
     "builds": [
-        {
-            "config": {
-                "distDir": "packages/venia-concept/dist"
-            },
-            "src": "now-build.sh",
-            "use": "@now/static-build"
-        },
         {
             "config": {
                 "includeFiles": [
                     ".env",
                     "venia-upward.yml",
                     "static/*",
-                    "templates/*"
+                    "templates/*",
+                    "dist/*",
+                    "dist/**/*"
                 ],
                 "maxLambdaSize": "50mb"
             },
